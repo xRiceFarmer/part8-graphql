@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client"
 import { useState } from "react"
 import { EDIT_AUTHOR } from "../queries"
 
-const Authors = (props) => {
+const Authors = () => {
   const result = useQuery(ALL_AUTHORS)
   const [name, setName] = useState('')
   const [born, setBorn] = useState('')
@@ -17,13 +17,10 @@ const Authors = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-
+    console.log({name, born})
     updateAuthor({variables: {name, born}})
     setName('')
     setBorn('')
-  }
-  if (!props.show) {
-    return null
   }
   return (
     <div>
@@ -49,7 +46,7 @@ const Authors = (props) => {
         <label>Pick an author:
           <select value={name} onChange={({target}) => setName(target.value)}>
             {authors.map((a) => (
-              <option value={a.name}>{a.name}</option>
+              <option key={a.name} value={a.name}>{a.name}</option>
             ))}
           </select>
         </label>
